@@ -1,11 +1,30 @@
 import './globals.css'
 import { Toaster } from 'sonner'
+import { SITE_URL, SITE_TITLE, SITE_DESCRIPTION } from '../lib/seo'
 
 export const metadata = {
-  title: 'Kshitiz Kumar | Portfolio',
-  description: 'Kshitiz Kumar — Software Development Engineer building AI-driven scalable full-stack systems.',
-  icons: {
-    icon: 'data:,',
+  metadataBase: new URL(SITE_URL),
+  title: { default: SITE_TITLE, template: '%s | Kshitiz Kumar' },
+  description: SITE_DESCRIPTION,
+  authors: [{ name: 'Kshitiz Kumar', url: SITE_URL }],
+  creator: 'Kshitiz Kumar',
+  openGraph: {
+    type: 'website',
+    locale: 'en_IN',
+    siteName: 'Kshitiz Kumar',
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
+  },
+  verification: {
+    google: process.env.GOOGLE_SITE_VERIFICATION || undefined,
+    other: process.env.BING_SITE_VERIFICATION
+      ? { 'msvalidate.01': process.env.BING_SITE_VERIFICATION }
+      : undefined,
   },
 }
 

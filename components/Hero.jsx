@@ -6,11 +6,6 @@ import useReveal from '../hooks/useReveal'
 export default function Hero() {
   const ref = useReveal()
 
-  const scrollTo = (id) => {
-    const el = document.getElementById(id)
-    if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 64, behavior: 'smooth' })
-  }
-
   return (
     <section id="home" ref={ref} className="relative min-h-screen w-full overflow-hidden grain">
       <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url(${HERO_BACKGROUND})` }} />
@@ -38,7 +33,7 @@ export default function Hero() {
           className="reveal font-display text-[14vw] sm:text-[10vw] lg:text-[9rem] xl:text-[10rem] font-bold uppercase tracking-tighter leading-[0.85] text-white"
           style={{ animationDelay: '0.15s' }}
         >
-          {PROFILE.firstName}<br />
+          {PROFILE.firstName}{' '}<br />
           <span className="text-amber-500">{PROFILE.lastName}.</span>
         </h1>
 
@@ -52,30 +47,30 @@ export default function Hero() {
           </div>
 
           <div className="lg:col-span-5 lg:justify-self-end space-y-3 w-full">
-            <button
-              onClick={() => scrollTo('projects')}
+            <a
+              href="#projects"
               className="w-full lg:w-auto inline-flex items-center justify-between gap-6 px-6 py-4 bg-amber-500 text-black font-mono-body text-xs uppercase tracking-[0.25em] font-semibold btn-amber"
             >
               View Projects <span>→</span>
-            </button>
-            <button
-              onClick={() => scrollTo('contact')}
+            </a>
+            <a
+              href="#contact"
               className="w-full lg:w-auto inline-flex items-center justify-between gap-6 px-6 py-4 bg-transparent text-white border border-white/30 hover:border-amber-500 hover:text-amber-500 transition-colors font-mono-body text-xs uppercase tracking-[0.25em] font-semibold"
             >
               Get in touch <span>↗</span>
-            </button>
+            </a>
           </div>
         </div>
       </div>
 
-      <button
-        onClick={() => scrollTo('about')}
+      <a
+        href="#about"
         aria-label="Scroll to about section"
         className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 text-gray-500 hover:text-amber-500 transition-colors"
       >
         <span className="text-[10px] font-mono-body uppercase tracking-[0.4em]">Scroll</span>
         <ArrowDown size={16} className="animate-bounce" />
-      </button>
+      </a>
     </section>
   )
 }

@@ -18,7 +18,7 @@ export default function About() {
           <div className="lg:col-span-4">
             <p className="text-xs font-mono-body uppercase tracking-[0.3em] text-amber-500">// 01 — About</p>
             <h2 className="font-display mt-4 text-4xl sm:text-5xl lg:text-6xl font-bold uppercase tracking-tight text-white leading-[0.95]">
-              The<br />Engineer.
+              About<br />Kshitiz.
             </h2>
             <div className="mt-8 hidden lg:block border-l-2 border-amber-500 pl-4">
               <p className="text-xs font-mono-body uppercase tracking-[0.2em] text-gray-500">Currently</p>
@@ -28,6 +28,9 @@ export default function About() {
           </div>
 
           <div className="lg:col-span-8">
+            <p className="mb-6 text-base sm:text-lg leading-relaxed text-gray-300 font-mono-body">
+              I’m {PROFILE.name}, a Computer Science and Engineering student at the Indian Institute of Information Technology, Nagpur. I build AI applications and full-stack software, with projects in education, legal queries, browser automation and machine learning.
+            </p>
             <p className="text-base sm:text-lg leading-relaxed text-gray-300 font-mono-body">{ABOUT}</p>
 
             <dl className="mt-12 grid grid-cols-2 sm:grid-cols-4 gap-px bg-white/10 border border-white/10">

@@ -32,12 +32,6 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  const goTo = (id) => {
-    const el = document.getElementById(id)
-    if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 72, behavior: 'smooth' })
-    setOpen(false)
-  }
-
   return (
     <header
       className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${
@@ -45,35 +39,37 @@ export default function Navbar() {
       }`}
     >
       <div className="max-w-7xl mx-auto px-6 sm:px-8 h-16 flex items-center justify-between">
-        <button
-          onClick={() => goTo('home')}
+        <a
+          href="#home"
+          aria-label="Kshitiz Kumar home"
           className="font-display text-base sm:text-lg font-bold tracking-tight uppercase text-white hover:text-amber-500 transition-colors"
         >
           KK<span className="text-amber-500">.</span>
           <span className="text-gray-500 text-xs ml-2 font-mono-body normal-case font-normal">/portfolio</span>
-        </button>
+        </a>
 
         <nav className="hidden md:flex items-center gap-1">
           {LINKS.map((l, i) => (
-            <button
+            <a
               key={l.id}
-              onClick={() => goTo(l.id)}
+              href={`#${l.id}`}
+              onClick={() => setOpen(false)}
               className={`px-3 py-2 text-xs font-mono-body uppercase tracking-[0.18em] transition-colors ${
                 active === l.id ? 'text-amber-500' : 'text-gray-400 hover:text-white'
               }`}
             >
               <span className="text-gray-600 mr-1.5 text-[10px]">0{i + 1}.</span>
               {l.label}
-            </button>
+            </a>
           ))}
         </nav>
 
-        <button
-          onClick={() => goTo('contact')}
+        <a
+          href="#contact"
           className="hidden md:inline-flex items-center gap-2 px-4 py-2 bg-amber-500 text-black text-xs font-mono-body uppercase tracking-[0.2em] font-semibold btn-amber"
         >
           Hire Me <span className="blink">_</span>
-        </button>
+        </a>
 
         <button
           aria-label="Toggle menu"
@@ -88,13 +84,14 @@ export default function Navbar() {
         <div className="md:hidden bg-black/95 backdrop-blur-xl border-t border-white/10">
           <div className="max-w-7xl mx-auto px-6 py-4 flex flex-col gap-1">
             {LINKS.map((l, i) => (
-              <button
+              <a
                 key={l.id}
-                onClick={() => goTo(l.id)}
+                href={`#${l.id}`}
+                onClick={() => setOpen(false)}
                 className="text-left px-3 py-3 text-sm font-mono-body uppercase tracking-[0.18em] text-gray-300 hover:text-amber-500 hover:bg-white/5"
               >
                 <span className="text-gray-600 mr-2">0{i + 1}.</span>{l.label}
-              </button>
+              </a>
             ))}
           </div>
         </div>
