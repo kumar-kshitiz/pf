@@ -29,7 +29,7 @@ export default function About() {
 
           <div className="lg:col-span-8">
             <p className="mb-6 text-base sm:text-lg leading-relaxed text-gray-300 font-mono-body">
-              I’m {PROFILE.name}, a Computer Science and Engineering student at the Indian Institute of Information Technology, Nagpur. I build AI applications and full-stack software, with projects in education, legal queries, browser automation and machine learning.
+              I’m {PROFILE.name}, a Final Year Computer Science and Engineering student at the Indian Institute of Information Technology, Nagpur. I build AI applications and full-stack software, with projects in education, legal queries, browser automation and machine learning.
             </p>
             <p className="text-base sm:text-lg leading-relaxed text-gray-300 font-mono-body">{ABOUT}</p>
 
