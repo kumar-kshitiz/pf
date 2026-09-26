@@ -3,7 +3,7 @@ import { ABOUT, PROFILE } from '../lib/data'
 import useReveal from '../hooks/useReveal'
 
 const STATS = [
-  { v: '450+', k: 'DSA solved' },
+  { v: '500+', k: 'DSA solved' },
   { v: '1615',  k: 'LeetCode peak' },
   { v: '1515',  k: 'CodeChef peak' },
   { v: '4+',    k: 'AI/Full-stack projects' },

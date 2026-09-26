@@ -54,11 +54,21 @@ export default function Navbar() {
               key={l.id}
               href={`#${l.id}`}
               onClick={() => setOpen(false)}
-              className={`px-3 py-2 text-xs font-mono-body uppercase tracking-[0.18em] transition-colors ${
-                active === l.id ? 'text-amber-500' : 'text-gray-400 hover:text-white'
+              className={`relative inline-flex items-center justify-center px-5 py-2.5 text-xs font-mono-body uppercase tracking-[0.18em] transition-all duration-200 ${
+                active === l.id
+                  ? 'text-amber-400 border border-amber-400/90 bg-black/20 shadow-[0_0_12px_rgba(251,191,36,0.7),0_0_24px_rgba(251,191,36,0.3)] drop-shadow-[0_0_14px_rgba(251,191,36,0.8)]'
+                  : 'text-gray-400 hover:text-white'
               }`}
+              style={
+                active === l.id
+                  ? {
+                      clipPath: 'polygon(12% 0%, 88% 0%, 100% 50%, 88% 100%, 12% 100%, 0% 50%)',
+                      WebkitClipPath: 'polygon(12% 0%, 88% 0%, 100% 50%, 88% 100%, 12% 100%, 0% 50%)',
+                    }
+                  : undefined
+              }
             >
-              <span className="text-gray-600 mr-1.5 text-[10px]">0{i + 1}.</span>
+              <span className={`mr-1.5 text-[10px] ${active === l.id ? 'text-amber-400' : 'text-gray-600'}`}>0{i + 1}.</span>
               {l.label}
             </a>
           ))}
@@ -88,9 +98,21 @@ export default function Navbar() {
                 key={l.id}
                 href={`#${l.id}`}
                 onClick={() => setOpen(false)}
-                className="text-left px-3 py-3 text-sm font-mono-body uppercase tracking-[0.18em] text-gray-300 hover:text-amber-500 hover:bg-white/5"
+                className={`text-left px-3 py-3 text-sm font-mono-body uppercase tracking-[0.18em] transition-all ${
+                  active === l.id
+                    ? 'text-amber-400 border border-amber-400/80 bg-black/30 shadow-[0_0_14px_rgba(251,191,36,0.4)]'
+                    : 'text-gray-300 hover:text-amber-500 hover:bg-white/5'
+                }`}
+                style={
+                  active === l.id
+                    ? {
+                        clipPath: 'polygon(12% 0%, 88% 0%, 100% 50%, 88% 100%, 12% 100%, 0% 50%)',
+                        WebkitClipPath: 'polygon(12% 0%, 88% 0%, 100% 50%, 88% 100%, 12% 100%, 0% 50%)',
+                      }
+                    : undefined
+                }
               >
-                <span className="text-gray-600 mr-2">0{i + 1}.</span>{l.label}
+                <span className={`mr-2 ${active === l.id ? 'text-amber-400' : 'text-gray-600'}`}>0{i + 1}.</span>{l.label}
               </a>
             ))}
           </div>

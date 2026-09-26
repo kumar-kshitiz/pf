@@ -1,40 +1,36 @@
 import { NextResponse } from 'next/server'
-import { connectDB } from '../../../lib/mongoose'
-import { ContactMessage } from '../../../lib/models'
+import { sendContactEmail } from '../../../lib/mail'
+
+export const runtime = 'nodejs'
 
 export async function POST(req) {
+  let body
   try {
-    const body = await req.json()
-    const { name, email, subject = '', message } = body
-
-    if (!name?.trim()) return NextResponse.json({ error: 'Name is required' }, { status: 400 })
-    if (!email?.trim() || !email.includes('@')) return NextResponse.json({ error: 'Valid email is required' }, { status: 400 })
-    if (!message?.trim()) return NextResponse.json({ error: 'Message is required' }, { status: 400 })
-
-    await connectDB()
-    const doc = await ContactMessage.create({ name, email, subject, message })
-
-    return NextResponse.json({
-      id: doc._id,
-      name: doc.name,
-      email: doc.email,
-      subject: doc.subject,
-      message: doc.message,
-      created_at: doc.created_at,
-    }, { status: 201 })
-  } catch (err) {
-    console.error('Contact POST error:', err)
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
+    body = await req.json()
+  } catch {
+    return NextResponse.json({ error: 'Invalid JSON body' }, { status: 400 })
   }
-}
-
-export async function GET() {
+  if (!body || typeof body !== 'object' || Array.isArray(body)) {
+    return NextResponse.json({ error: 'Invalid contact form' }, { status: 400 })
+  }
+  const limits = { name: 120, email: 200, subject: 200, message: 4000 }
+  const contact = {}
+  for (const [field, limit] of Object.entries(limits)) {
+    const value = body[field] ?? (field === 'subject' ? '' : null)
+    if (typeof value !== 'string' || (field !== 'subject' && !value.trim()) || value.length > limit) {
+      return NextResponse.json({ error: `Invalid ${field} (maximum ${limit} characters)` }, { status: 400 })
+    }
+    contact[field] = value.trim()
+  }
+  if (!/^[^\s@<>;,]+@[^\s@<>;,]+\.[^\s@<>;,]+$/.test(contact.email) ||
+      /[\r\n]/.test(contact.name + contact.subject)) {
+    return NextResponse.json({ error: 'Enter a valid email, name, and subject' }, { status: 400 })
+  }
   try {
-    await connectDB()
-    const rows = await ContactMessage.find({}).sort({ created_at: -1 }).limit(500).lean()
-    return NextResponse.json(rows)
+    await sendContactEmail(contact)
+    return NextResponse.json({ success: true })
   } catch (err) {
-    console.error('Contact GET error:', err)
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
+    console.error('Contact email failed:', err.code || 'MAIL_DELIVERY_FAILED')
+    return NextResponse.json({ error: 'Could not send message. Please try again or use the email link.' }, { status: 503 })
   }
 }

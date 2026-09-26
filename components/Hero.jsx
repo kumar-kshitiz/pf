@@ -13,12 +13,15 @@ export default function Hero() {
       <div className="absolute inset-0 grid-pattern opacity-60" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 pt-24 sm:pt-28">
-        <div className="reveal flex flex-wrap items-center justify-between gap-4 text-[10px] sm:text-xs font-mono-body uppercase tracking-[0.3em] text-gray-500 border-b border-white/10 pb-4">
-          <span className="flex items-center gap-2">
-            <MapPin size={12} className="text-amber-500" />{PROFILE.location}
+        <div className="reveal flex flex-wrap items-center justify-between gap-3 sm:gap-5 border border-white/10 bg-black/35 px-4 sm:px-6 py-3 sm:py-4 font-mono-body uppercase tracking-[0.24em] text-[9px] sm:text-[10px] shadow-[0_0_0_1px_rgba(255,255,255,0.03),0_0_30px_rgba(245,158,11,0.08)] backdrop-blur-sm">
+          <span className="flex items-center gap-2 text-white/90">
+            <MapPin size={16} className="text-amber-500" />
+            <span className="text-gray-200">{PROFILE.location}</span>
           </span>
-          <span className="hidden sm:inline"><span className="text-amber-500">●</span> Available for opportunities</span>
-          <span>© 2026 / v1.0</span>
+          <span className="hidden sm:inline text-gray-200">
+            <span className="text-amber-500">●</span> Available for opportunities
+          </span>
+          <span className="text-gray-300">© 2026 / v1.0</span>
         </div>
       </div>
 

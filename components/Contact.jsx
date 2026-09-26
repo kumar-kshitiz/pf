@@ -25,6 +25,7 @@ export default function Contact() {
 
   const onSubmit = async (e) => {
     e.preventDefault()
+    if (submitting) return
     if (!validate()) return
     setSubmitting(true)
     try {
@@ -33,11 +34,12 @@ export default function Contact() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form),
       })
-      if (!res.ok) throw new Error('Failed')
+      const result = await res.json()
+      if (!res.ok) throw new Error(result.error || 'Could not send message. Please try again.')
       toast.success("Message sent — I'll get back to you soon.")
       setForm({ name: '', email: '', subject: '', message: '' })
-    } catch {
-      toast.error('Could not send message. Please try again.')
+    } catch (error) {
+      toast.error(error.message || 'Could not send message. Please try again or use the email link.')
     } finally {
       setSubmitting(false)
     }
@@ -84,24 +86,24 @@ export default function Contact() {
           </div>
 
           <div className="lg:col-span-7">
-            <form onSubmit={onSubmit} noValidate className="bg-[#0a0a0a] border border-white/10 p-6 sm:p-10 space-y-6">
+            <form onSubmit={onSubmit} noValidate className="bg-amber-500 text-[#0a0a0a] border border-black/20 p-6 sm:p-10 space-y-6 [color-scheme:light]">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <Field id="name" label="Name *" value={form.name} onChange={onChange('name')} error={errors.name} placeholder="Your full name" />
                 <Field id="email" label="Email *" type="email" value={form.email} onChange={onChange('email')} error={errors.email} placeholder="you@domain.com" />
               </div>
               <Field id="subject" label="Subject" value={form.subject} onChange={onChange('subject')} placeholder="(optional) what's this about?" />
               <div>
-                <label htmlFor="message" className="block text-[10px] font-mono-body uppercase tracking-[0.3em] text-gray-500 mb-2">Message *</label>
+                <label htmlFor="message" className="block text-[10px] font-mono-body uppercase tracking-[0.3em] text-black/80 mb-2">Message *</label>
                 <textarea
-                  id="message" rows={5} value={form.message} onChange={onChange('message')}
+                  id="message" rows={5} maxLength={4000} value={form.message} onChange={onChange('message')}
                   placeholder="Tell me about your project, role, or idea…"
-                  className="w-full bg-transparent border-b border-white/20 focus:border-amber-500 outline-none text-white font-mono-body text-sm py-3 resize-none transition-colors placeholder:text-gray-600"
+                  className="w-full bg-transparent border-b border-black/40 focus:border-black outline-none text-[#0a0a0a] font-mono-body text-sm py-3 resize-none transition-colors placeholder:text-black/70"
                 />
-                {errors.message && <p className="mt-1 text-xs font-mono-body text-red-500">{errors.message}</p>}
+                {errors.message && <p role="alert" className="mt-1 text-sm font-mono-body font-semibold text-red-800">{errors.message}</p>}
               </div>
               <button
                 type="submit" disabled={submitting}
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 bg-amber-500 disabled:bg-amber-500/50 disabled:cursor-not-allowed text-black font-mono-body text-xs uppercase tracking-[0.25em] font-semibold btn-amber"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 bg-[#0a0a0a] hover:bg-black disabled:bg-black/70 disabled:cursor-not-allowed text-amber-500 font-mono-body text-xs uppercase tracking-[0.25em] font-semibold transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-black"
               >
                 {submitting ? 'Sending…' : 'Send message'} <Send size={14} />
               </button>
@@ -116,12 +118,12 @@ export default function Contact() {
 function Field({ id, label, type = 'text', value, onChange, error, placeholder }) {
   return (
     <div>
-      <label htmlFor={id} className="block text-[10px] font-mono-body uppercase tracking-[0.3em] text-gray-500 mb-2">{label}</label>
+      <label htmlFor={id} className="block text-[10px] font-mono-body uppercase tracking-[0.3em] text-black/80 mb-2">{label}</label>
       <input
-        id={id} type={type} value={value} onChange={onChange} placeholder={placeholder}
-        className="w-full bg-transparent border-b border-white/20 focus:border-amber-500 outline-none text-white font-mono-body text-sm py-3 transition-colors placeholder:text-gray-600"
+        id={id} type={type} maxLength={id === 'name' ? 120 : 200} value={value} onChange={onChange} placeholder={placeholder}
+        className="w-full bg-transparent border-b border-black/40 focus:border-black outline-none text-[#0a0a0a] font-mono-body text-sm py-3 transition-colors placeholder:text-black/70"
       />
-      {error && <p className="mt-1 text-xs font-mono-body text-red-500">{error}</p>}
+      {error && <p role="alert" className="mt-1 text-sm font-mono-body font-semibold text-red-800">{error}</p>}
     </div>
   )
 }

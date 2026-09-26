@@ -16,6 +16,9 @@ body {
 
 ::selection { background-color: #F59E0B; color: #050505; }
 
+#contact form::selection,
+#contact form *::selection { background-color: #050505; color: #F59E0B; }
+
 ::-webkit-scrollbar { width: 10px; height: 10px; }
 ::-webkit-scrollbar-track { background: #0a0a0a; }
 ::-webkit-scrollbar-thumb { background: #262626; border: 2px solid #0a0a0a; }
